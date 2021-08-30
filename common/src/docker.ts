@@ -169,6 +169,7 @@ export async function runContainer(
 	subFolder: string,
 	command: string,
 	envs?: string[],
+	privileged?: boolean,
 	mounts?: string[]
 ): Promise<void> {
 	const checkoutPathAbsolute = getAbsolutePath(checkoutPath, process.cwd())
@@ -220,6 +221,9 @@ export async function runContainer(
 		for (const env of envs) {
 			args.push('--env', env)
 		}
+	}
+	if (privileged) {
+		args.push('--privileged')
 	}
 	args.push(`${imageName}:${imageTag ?? 'latest'}`)
 	args.push('bash', '-c', command)

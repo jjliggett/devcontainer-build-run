@@ -41,6 +41,10 @@ inputs:
     required: false
     default: false
     description: For non-root dev containers (i.e. where `remoteUser` is specified), the action attempts to make the container user UID and GID match those of the host user. Set this to true to skip this step (defaults to false)
+  privileged:
+    required: false
+    default: false
+    description: Control whether extended privileges are given to the devcontainer (i.e. using --privileged option). This is needed for dev containers configured with docker-in-docker. Set this to true to grant extended privileges (defaults to false)
 runs:
   using: 'node12'
   main: 'github-action/dist/index.js'

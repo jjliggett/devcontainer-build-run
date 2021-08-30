@@ -162,7 +162,7 @@ RUN sudo chown -R ${hostUser.uid}:${hostUser.gid} /home/${containerUserName} \
         return derivedImageName;
     });
 }
-function runContainer(exec, imageName, imageTag, checkoutPath, subFolder, command, envs, mounts) {
+function runContainer(exec, imageName, imageTag, checkoutPath, subFolder, command, envs, privileged, mounts) {
     return __awaiter(this, void 0, void 0, function* () {
         const checkoutPathAbsolute = file_1.getAbsolutePath(checkoutPath, process.cwd());
         const folder = path_1.default.join(checkoutPathAbsolute, subFolder);
@@ -199,6 +199,9 @@ function runContainer(exec, imageName, imageTag, checkoutPath, subFolder, comman
             for (const env of envs) {
                 args.push('--env', env);
             }
+        }
+        if (privileged) {
+            args.push('--privileged')
         }
         args.push(`${imageName}:${imageTag !== null && imageTag !== void 0 ? imageTag : 'latest'}`);
         args.push('bash', '-c', command);

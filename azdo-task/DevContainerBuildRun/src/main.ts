@@ -47,6 +47,8 @@ async function runMain(): Promise<void> {
 		const envs = task.getInput('env')?.split('\n') ?? []
 		const skipContainerUserIdUpdate =
 			(task.getInput('skipContainerUserIdUpdate') ?? 'false') === 'true'
+		const privileged =
+			(task.getInput('privileged') ?? 'false') === 'true'
 
 		const buildImageName = await buildImage(
 			imageName,
@@ -66,7 +68,8 @@ async function runMain(): Promise<void> {
 				checkoutPath,
 				subFolder,
 				runCommand,
-				envs
+				envs,
+				privileged
 			))
 		) {
 			return

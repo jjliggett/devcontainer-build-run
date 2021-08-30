@@ -46,7 +46,7 @@ function run() {
     });
 }
 function runMain() {
-    var _a, _b, _c, _d, _e;
+    var _a, _b, _c, _d, _e, _f;
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const buildXInstalled = yield docker_1.isDockerBuildXInstalled();
@@ -69,11 +69,12 @@ function runMain() {
             }
             const envs = (_d = (_c = task.getInput('env')) === null || _c === void 0 ? void 0 : _c.split('\n')) !== null && _d !== void 0 ? _d : [];
             const skipContainerUserIdUpdate = ((_e = task.getInput('skipContainerUserIdUpdate')) !== null && _e !== void 0 ? _e : 'false') === 'true';
+            const privileged = ((_f = task.getInput('privileged')) !== null && _f !== void 0 ? _f : 'false') === 'true';
             const buildImageName = yield docker_1.buildImage(imageName, imageTag, checkoutPath, subFolder, skipContainerUserIdUpdate);
             if (buildImageName === '') {
                 return;
             }
-            if (!(yield docker_1.runContainer(buildImageName, imageTag, checkoutPath, subFolder, runCommand, envs))) {
+            if (!(yield docker_1.runContainer(buildImageName, imageTag, checkoutPath, subFolder, runCommand, envs, privileged))) {
                 return;
             }
         }

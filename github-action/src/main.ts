@@ -35,6 +35,9 @@ async function runMain(): Promise<void> {
 		const skipContainerUserIdUpdate = core.getBooleanInput(
 			'skipContainerUserIdUpdate'
 		)
+		const privileged = core.getBooleanInput(
+			'privileged'
+		)
 
 		const buildImageName = await buildImage(
 			imageName,
@@ -54,7 +57,8 @@ async function runMain(): Promise<void> {
 				checkoutPath,
 				subFolder,
 				runCommand,
-				envs
+				envs,
+				privileged
 			))
 		) {
 			return

@@ -51,11 +51,11 @@ function buildImage(imageName, imageTag, checkoutPath, subFolder, skipContainerU
     });
 }
 exports.buildImage = buildImage;
-function runContainer(imageName, imageTag, checkoutPath, subFolder, command, envs) {
+function runContainer(imageName, imageTag, checkoutPath, subFolder, command, envs, privileged) {
     return __awaiter(this, void 0, void 0, function* () {
         console.log('🏃‍♀️ Running dev container...');
         try {
-            yield docker.runContainer(exec_1.exec, imageName, imageTag, checkoutPath, subFolder, command, envs);
+            yield docker.runContainer(exec_1.exec, imageName, imageTag, checkoutPath, subFolder, command, envs, privileged);
             return true;
         }
         catch (error) {

@@ -1669,11 +1669,11 @@ function buildImage(imageName, imageTag, checkoutPath, subFolder, skipContainerU
     });
 }
 exports.buildImage = buildImage;
-function runContainer(imageName, imageTag, checkoutPath, subFolder, command, envs) {
+function runContainer(imageName, imageTag, checkoutPath, subFolder, command, envs, privileged) {
     return __awaiter(this, void 0, void 0, function* () {
         core.startGroup('🏃‍♀️ Running dev container...');
         try {
-            yield docker.runContainer(exec_1.exec, imageName, imageTag, checkoutPath, subFolder, command, envs);
+            yield docker.runContainer(exec_1.exec, imageName, imageTag, checkoutPath, subFolder, command, envs, privileged);
             return true;
         }
         catch (error) {
@@ -1826,11 +1826,12 @@ function runMain() {
             const runCommand = core.getInput('runCmd', { required: true });
             const envs = core.getMultilineInput('env');
             const skipContainerUserIdUpdate = core.getBooleanInput('skipContainerUserIdUpdate');
+            const privileged = core.getBooleanInput('privileged');
             const buildImageName = yield docker_1.buildImage(imageName, imageTag, checkoutPath, subFolder, skipContainerUserIdUpdate);
             if (buildImageName === '') {
                 return;
             }
-            if (!(yield docker_1.runContainer(buildImageName, imageTag, checkoutPath, subFolder, runCommand, envs))) {
+            if (!(yield docker_1.runContainer(buildImageName, imageTag, checkoutPath, subFolder, runCommand, envs, privileged))) {
                 return;
             }
         }
@@ -3903,7 +3904,7 @@ RUN sudo chown -R ${hostUser.uid}:${hostUser.gid} /home/${containerUserName} \
         return derivedImageName;
     });
 }
-function runContainer(exec, imageName, imageTag, checkoutPath, subFolder, command, envs, mounts) {
+function runContainer(exec, imageName, imageTag, checkoutPath, subFolder, command, envs, privileged, mounts) {
     return docker_awaiter(this, void 0, void 0, function* () {
         const checkoutPathAbsolute = getAbsolutePath(checkoutPath, process.cwd());
         const folder = external_path_default().join(checkoutPathAbsolute, subFolder);
@@ -3940,6 +3941,9 @@ function runContainer(exec, imageName, imageTag, checkoutPath, subFolder, comman
             for (const env of envs) {
                 args.push('--env', env);
             }
+        }
+        if (privileged) {
+            args.push('--privileged');
         }
         args.push(`${imageName}:${imageTag !== null && imageTag !== void 0 ? imageTag : 'latest'}`);
         args.push('bash', '-c', command);

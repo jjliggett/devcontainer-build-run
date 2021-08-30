@@ -1,0 +1,15 @@
+{
+    "name": "dc-test",
+    "build": {
+        "dockerfile": "Dockerfile"
+    },
+    "runArgs": ["--init", "--privileged"],
+    "mounts": ["source=dind-var-lib-docker,target=/var/lib/docker,type=volume"],
+    "overrideCommand": false,
+    "settings": {},
+    "extensions": [
+        "ms-azuretools.vscode-docker",
+        "golang.Go",
+    ],
+    "remoteUser": "vscode"
+}

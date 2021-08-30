@@ -91,7 +91,13 @@
       "label": "For non-root dev containers (i.e. where `remoteUser` is specified), the action attempts to make the container user UID and GID match those of the host user. Set this to true to skip this step (defaults to false)",
       "required": false,
       "defaultValue": false
-
+    },
+    {
+      "name": "privileged",
+      "type": "boolean",
+      "label": "Control whether extended privileges are given to the dev container (i.e. using --privileged option). This is needed for dev containers configured with docker-in-docker. Set this to true to grant extended privileges (defaults to false)",
+      "required": false,
+      "defaultValue": false
     }
   ],
   "outputVariables": [],

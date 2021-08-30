@@ -34,7 +34,8 @@ export async function runContainer(
 	checkoutPath: string,
 	subFolder: string,
 	command: string,
-	envs?: string[]
+	envs?: string[],
+	privileged?: boolean
 ): Promise<boolean> {
 	console.log('🏃‍♀️ Running dev container...')
 	try {
@@ -45,7 +46,8 @@ export async function runContainer(
 			checkoutPath,
 			subFolder,
 			command,
-			envs
+			envs,
+			privileged
 		)
 		return true
 	} catch (error) {

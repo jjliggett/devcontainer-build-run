@@ -43,6 +43,18 @@ cd "$script_dir/.."
 # reset these before checking for changes
 git checkout azdo-task/vss-extension.json
 git checkout azdo-task/DevContainerBuildRun/task.json
+echo "cat azdo-task/DevContainerBuildRun/dist/index.js"
+cat azdo-task/DevContainerBuildRun/dist/index.js
+echo "cat azdo-task/DevContainerBuildRun/dist/index.js.map"
+cat azdo-task/DevContainerBuildRun/dist/index.js.map
+echo "cat azdo-task/DevContainerBuildRun/src/main.ts"
+cat azdo-task/DevContainerBuildRun/src/main.ts
+echo "cat common_lib/docker.js"
+cat common_lib/docker.js
+echo "cat github-action/dist/index.js.map"
+cat github-action/dist/index.js.map
+echo "cat github-action/src/main.ts"
+cat github-action/src/main.ts
 if [[ -n $(git status --short) ]]; then
     echo "*** There are unexpected changes in the working directory (see git status output below)"
     echo "*** Ensure you have run scripts/build-local.sh"

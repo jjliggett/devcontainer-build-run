@@ -57,7 +57,7 @@ In the example above, the devcontainer-build-run will perform the following step
 | sourceBranchFilterForPush | false    | Allows you to limit which branch's builds are pushed to the registry (only specified branches are allowed to push). If empty, all branches are allowed                                                                                                           |
 | buildReasonsForPush       | false    | Allows you to limit the Build.Reason values that are allowed to push to the registry. Defaults to Manual, IndividualCI, BatchedCI. See https://docs.microsoft.com/en-us/azure/devops/pipelines/build/variables?view=azure-devops&viewFallbackFrom=vsts&tabs=yaml |
 | skipContainerUserIdUpdate | false    | For non-root dev containers (i.e. where `remoteUser` is specified), the action attempts to make the container user UID and GID match those of the host user. Set this to true to skip this step (defaults to false)                                              |
-
+| privileged                | false    | Allows you to grant extended privileges to the dev container (i.e. using --privileged option). This is needed for dev containers configured with docker-in-docker. Set this to true to grant extended privileges (defaults to false)                             |
 
 ## Specifying a sub-folder
 

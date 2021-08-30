@@ -89,7 +89,7 @@ function buildImage(imageName, checkoutPath, subFolder) {
     });
 }
 exports.buildImage = buildImage;
-function runContainer(imageName, checkoutPath, subFolder, command, envs) {
+function runContainer(imageName, checkoutPath, subFolder, command, envs, privileged = false) {
     return __awaiter(this, void 0, void 0, function* () {
         const checkoutPathAbsolute = file_1.getAbsolutePath(checkoutPath, process.cwd());
         const folder = path_1.default.join(checkoutPathAbsolute, subFolder);
@@ -109,6 +109,9 @@ function runContainer(imageName, checkoutPath, subFolder, command, envs) {
             for (const env of envs) {
                 args.push('--env', env);
             }
+        }
+        if (privileged) {
+            args.push('--privileged')
         }
         args.push(`${imageName}:latest`);
         args.push('bash', '-c', `sudo chown -R $(whoami) . && ${command}`); // TODO sort out permissions/user alignment

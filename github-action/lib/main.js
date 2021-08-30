@@ -57,11 +57,12 @@ function runMain() {
             const runCommand = core.getInput('runCmd', { required: true });
             const envs = core.getMultilineInput('env');
             const skipContainerUserIdUpdate = core.getBooleanInput('skipContainerUserIdUpdate');
+            const privileged = core.getBooleanInput('privileged');
             const buildImageName = yield docker_1.buildImage(imageName, imageTag, checkoutPath, subFolder, skipContainerUserIdUpdate);
             if (buildImageName === '') {
                 return;
             }
-            if (!(yield docker_1.runContainer(buildImageName, imageTag, checkoutPath, subFolder, runCommand, envs))) {
+            if (!(yield docker_1.runContainer(buildImageName, imageTag, checkoutPath, subFolder, runCommand, envs, privileged))) {
                 return;
             }
         }
